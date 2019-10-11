@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">ConversionCalculator</string>
+    <string name="meters">Meters</string>
+    <string name="calculate">Calculate</string>
+    <string name="clear">Clear</string>
+    <string name="mode">Mode</string>
+    <string name="enter_from_value">Enter from value</string>
+    <string name="enter_to_value">Enter to value</string>
+    <string name="length_converter">Length Converter</string>
+    <string name="yards">Yards</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string-array name="LengthChoices">
+        <item>Yards</item>
+        <item>Meters</item>
+        <item>Miles</item>
+    </string-array>
+    <string-array name="VolumeChoices">
+        <item>Gallons</item>
+        <item>Liters</item>
+        <item>Quarts</item>
+    </string-array>
+</resources>
