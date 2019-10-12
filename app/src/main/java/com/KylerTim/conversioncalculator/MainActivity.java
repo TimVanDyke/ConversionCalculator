@@ -2,11 +2,14 @@ package com.KylerTim.conversioncalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
+
 import com.google.android.material.snackbar.Snackbar;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        // setSupportActionBar(toolbar);
 
         TextView titleText = (TextView) findViewById(R.id.titleText);
 
@@ -102,6 +107,14 @@ public class MainActivity extends AppCompatActivity {
 
         if(imm.isAcceptingText()) { // verify if the soft keyboard is open
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == FROM_SELECTION) {
+            TextView fromUnitLabel = (TextView) findViewById(R.id.fromUnitLabel);
+            fromUnitLabel.setText(data.getStringExtra("fromSelectionChoice"));
         }
     }
 

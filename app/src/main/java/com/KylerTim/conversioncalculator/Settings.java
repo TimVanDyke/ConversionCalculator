@@ -16,8 +16,9 @@ import android.widget.Spinner;
 
 public class Settings extends AppCompatActivity {
 
-    private String fromSelection = "test";
-    private String toSelection = "test2";
+    private String fromSelection;
+    private String toSelection;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +32,10 @@ public class Settings extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
                 intent.putExtra("fromSelectionChoice", fromSelection);
-                intent.putExtra("toSelectionChoice", toSelection);
                 setResult(MainActivity.FROM_SELECTION, intent);
+                intent.putExtra("toSelectionChoice", toSelection);
                 setResult(MainActivity.TO_SELECTION, intent);
+                finish();
             }
         });
 
