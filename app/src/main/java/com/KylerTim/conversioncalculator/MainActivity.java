@@ -4,6 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,19 +16,19 @@ import android.widget.TextView;
 import android.widget.Toolbar;
 
 import com.google.android.material.snackbar.Snackbar;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int FROM_SELECTION = 1;
     public static final int TO_SELECTION = 1;
+    public static int mode = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        // setSupportActionBar(toolbar);
+
 
         TextView titleText = (TextView) findViewById(R.id.titleText);
 
@@ -38,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         Button modeButton = (Button) findViewById(R.id.modeButton);
 
         //if mode is 0: length, else volume.
-        AtomicInteger mode = new AtomicInteger();
+
+
 
         clearButton.setOnClickListener(y -> {
             hideSoftKeyBoard();
@@ -55,21 +61,25 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(fromTextEdit,"No info entered.", Snackbar.LENGTH_LONG).show();
             }
 
-            if(fromInput.length() != 0 && toInput.length() == 0){
-                if(mode.get() == 0) {
+            if(mode == 0) {
+                if (fromInput.length() != 0 && toInput.length() == 0) {
                     double toAnswer = UnitsConverter.convert(Double.parseDouble(fromInput), UnitsConverter.LengthUnits.valueOf(fromUnitLabel.getText().toString()), UnitsConverter.LengthUnits.valueOf(toUnitLabel.getText().toString()));
                     toTextEdit.setText(String.valueOf(toAnswer));
-                } else {
-                    double toAnswer = UnitsConverter.convert(Double.parseDouble(fromInput), UnitsConverter.VolumeUnits.valueOf(fromUnitLabel.getText().toString()), UnitsConverter.VolumeUnits.valueOf(toUnitLabel.getText().toString()));
-                    toTextEdit.setText(String.valueOf(toAnswer));
+                }
+
+                if (toInput.length() != 0 && fromInput.length() == 0) {
+                    double fromAnswer = UnitsConverter.convert(Double.parseDouble(toInput), UnitsConverter.LengthUnits.valueOf(toUnitLabel.getText().toString()), UnitsConverter.LengthUnits.valueOf(fromUnitLabel.getText().toString()));
+                    fromTextEdit.setText(String.valueOf(fromAnswer));
                 }
             }
 
-            if(toInput.length() != 0 && fromInput.length() == 0){
-                if (mode.get() == 0) {
-                    double fromAnswer = UnitsConverter.convert(Double.parseDouble(toInput), UnitsConverter.LengthUnits.valueOf(toUnitLabel.getText().toString()), UnitsConverter.LengthUnits.valueOf(fromUnitLabel.getText().toString()));
-                    fromTextEdit.setText(String.valueOf(fromAnswer));
-                } else {
+            if(mode == 1) {
+                if (fromInput.length() != 0 && toInput.length() == 0) {
+                    double toAnswer = UnitsConverter.convert(Double.parseDouble(fromInput), UnitsConverter.VolumeUnits.valueOf(fromUnitLabel.getText().toString()), UnitsConverter.VolumeUnits.valueOf(toUnitLabel.getText().toString()));
+                    toTextEdit.setText(String.valueOf(toAnswer));
+                }
+
+                if (toInput.length() != 0 && fromInput.length() == 0) {
                     double fromAnswer = UnitsConverter.convert(Double.parseDouble(toInput), UnitsConverter.VolumeUnits.valueOf(toUnitLabel.getText().toString()), UnitsConverter.VolumeUnits.valueOf(fromUnitLabel.getText().toString()));
                     fromTextEdit.setText(String.valueOf(fromAnswer));
                 }
@@ -84,14 +94,14 @@ public class MainActivity extends AppCompatActivity {
             hideSoftKeyBoard();
             fromTextEdit.setText("");
             toTextEdit.setText("");
-            if(mode.get() == 0) {
-                mode.set(1);
+            if(mode == 0) {
+                mode = 1;
                 fromUnitLabel.setText("Gallons");
                 toUnitLabel.setText("Liters");
                 titleText.setText("Volume Converter");
             }
             else{
-                mode.set(0);
+                mode = 0;
                 fromUnitLabel.setText("Yards");
                 toUnitLabel.setText("Meters");
                 titleText.setText("Length Converter");
@@ -116,6 +126,28 @@ public class MainActivity extends AppCompatActivity {
             TextView fromUnitLabel = (TextView) findViewById(R.id.fromUnitLabel);
             fromUnitLabel.setText(data.getStringExtra("fromSelectionChoice"));
         }
+        if (resultCode == TO_SELECTION){
+            TextView toUnitLabel = (TextView) findViewById(R.id.toUnitLabel);
+            toUnitLabel.setText(data.getStringExtra("toSelectionChoice"));
+        }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_settings_navigation:
+                Intent intent = new Intent(MainActivity.this, Settings.class);
+                startActivityForResult(intent, mode);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

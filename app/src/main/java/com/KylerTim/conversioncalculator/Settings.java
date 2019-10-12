@@ -16,8 +16,9 @@ import android.widget.Spinner;
 
 public class Settings extends AppCompatActivity {
 
-    private String fromSelection;
-    private String toSelection;
+    private String fromSelection = "Yards";
+    private String toSelection = "Meters";
+    private int modeSelection = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,15 +27,17 @@ public class Settings extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        FloatingActionButton fab =  findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.putExtra("fromSelectionChoice", fromSelection);
-                setResult(MainActivity.FROM_SELECTION, intent);
-                intent.putExtra("toSelectionChoice", toSelection);
-                setResult(MainActivity.TO_SELECTION, intent);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("fromSelectionChoice", fromSelection);
+                setResult(MainActivity.FROM_SELECTION, resultIntent);
+                resultIntent.putExtra("toSelectionChoice", toSelection);
+                setResult(MainActivity.TO_SELECTION, resultIntent);
+                resultIntent.putExtra("mode", modeSelection);
+                setResult(MainActivity.mode, resultIntent);
                 finish();
             }
         });
@@ -50,8 +53,14 @@ public class Settings extends AppCompatActivity {
         lengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         volumeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        fromSpinner.setAdapter(lengthAdapter);
-        fromSpinner.setAdapter(lengthAdapter);
+        if(modeSelection == 0){
+            fromSpinner.setAdapter(lengthAdapter);
+            toSpinner.setAdapter(lengthAdapter);
+        }
+        else if(modeSelection == 1){
+            fromSpinner.setAdapter(volumeAdapter);
+            toSpinner.setAdapter(volumeAdapter);
+        }
 
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
