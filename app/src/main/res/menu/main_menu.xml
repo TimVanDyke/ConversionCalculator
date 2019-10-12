@@ -4,6 +4,5 @@
 
     <item
         android:id="@+id/action_settings_navigation"
-        android:title="@string/title_activity_settings"
-        app:showAsAction="always" />
+        android:title="@string/title_activity_settings" />
 </menu>

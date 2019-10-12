@@ -14,11 +14,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
+import java.util.Set;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
-
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -113,7 +112,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fromTextEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    toTextEdit.setText("");
+                }
+            }
+        });
 
+        toTextEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    fromTextEdit.setText("");
+                }
+            }
+        });
     }
 
     //https://stackoverflow.com/questions/3553779/android-dismiss-keyboard
