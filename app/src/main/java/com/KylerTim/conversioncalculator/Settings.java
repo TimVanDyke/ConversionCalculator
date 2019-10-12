@@ -42,6 +42,11 @@ public class Settings extends AppCompatActivity {
 
         });
 
+        Intent payload = getIntent();
+        if (payload.hasExtra("mode")) {
+            modeSelection = payload.getIntExtra("mode", 0);
+        }
+
         Spinner fromSpinner = (Spinner) findViewById(R.id.fromUnitChoice);
         Spinner toSpinner = (Spinner) findViewById(R.id.toUnitChoice);
 

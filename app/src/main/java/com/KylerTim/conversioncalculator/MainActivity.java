@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -162,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_settings_navigation:
                 Intent intent = new Intent(MainActivity.this, Settings.class);
+                intent.putExtra("mode", mode);
                 startActivityForResult(intent,mode);
                 return true;
             default:
