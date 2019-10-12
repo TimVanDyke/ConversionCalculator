@@ -13,9 +13,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -23,12 +26,13 @@ public class MainActivity extends AppCompatActivity {
     public static final int FROM_SELECTION = 1;
     public static final int TO_SELECTION = 1;
     public static int mode = 0;
+    public static  String fromUnitString= "";
+    public static String toUnitString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         TextView titleText = (TextView) findViewById(R.id.titleText);
 
@@ -44,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
         //if mode is 0: length, else volume.
 
-
+        fromUnitString = fromUnitLabel.getText().toString();
+        toUnitString = toUnitLabel.getText().toString();
 
         clearButton.setOnClickListener(y -> {
             hideSoftKeyBoard();
@@ -123,11 +128,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == FROM_SELECTION) {
-            TextView fromUnitLabel = (TextView) findViewById(R.id.fromUnitLabel);
+            TextView fromUnitLabel = findViewById(R.id.fromUnitLabel);
             fromUnitLabel.setText(data.getStringExtra("fromSelectionChoice"));
         }
         if (resultCode == TO_SELECTION){
-            TextView toUnitLabel = (TextView) findViewById(R.id.toUnitLabel);
+            TextView toUnitLabel = findViewById(R.id.toUnitLabel);
             toUnitLabel.setText(data.getStringExtra("toSelectionChoice"));
         }
     }
@@ -144,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.action_settings_navigation:
                 Intent intent = new Intent(MainActivity.this, Settings.class);
-                startActivityForResult(intent, mode);
+                startActivityForResult(intent,mode);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

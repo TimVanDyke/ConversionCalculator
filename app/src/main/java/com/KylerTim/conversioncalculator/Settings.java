@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,9 +15,11 @@ import android.widget.Spinner;
 
 public class Settings extends AppCompatActivity {
 
+
     private String fromSelection = "Yards";
     private String toSelection = "Meters";
     private int modeSelection = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +28,18 @@ public class Settings extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab =  findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab =  (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
+            public void onClick(View view){
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("fromSelectionChoice", fromSelection);
-                setResult(MainActivity.FROM_SELECTION, resultIntent);
                 resultIntent.putExtra("toSelectionChoice", toSelection);
+                setResult(MainActivity.FROM_SELECTION, resultIntent);
                 setResult(MainActivity.TO_SELECTION, resultIntent);
-                resultIntent.putExtra("mode", modeSelection);
-                setResult(MainActivity.mode, resultIntent);
                 finish();
-            }
+                }
+
         });
 
         Spinner fromSpinner = (Spinner) findViewById(R.id.fromUnitChoice);
@@ -87,5 +87,18 @@ public class Settings extends AppCompatActivity {
         });
 
     }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == importedFrom) {
+//            fromSelection = data.getStringExtra("fromUnits");
+//        }
+//        if (resultCode == importedTo){
+//            toSelection = data.getStringExtra("toUnits");
+//        }
+//        if(resultCode == importedMode){
+//            modeSelection = data.getIntExtra("mode", 0);
+//        }
+//    }
 
 }
