@@ -67,6 +67,8 @@ public class Settings extends AppCompatActivity {
             toSpinner.setAdapter(volumeAdapter);
         }
 
+
+
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

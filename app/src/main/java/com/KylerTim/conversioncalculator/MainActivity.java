@@ -24,10 +24,12 @@ import com.google.android.material.snackbar.Snackbar;
 public class MainActivity extends AppCompatActivity {
 
     public static final int FROM_SELECTION = 1;
-    public static final int TO_SELECTION = 1;
+    public static final int TO_SELECTION = 2;
+    //if mode is 0: length, else volume.
     public static int mode = 0;
-    public static  String fromUnitString= "";
-    public static String toUnitString = "";
+
+    public static String oldFromString = "Gallons";
+    public static String oldToString = "Liters";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +47,6 @@ public class MainActivity extends AppCompatActivity {
         Button calculateButton = (Button) findViewById(R.id.calculateButton);
         Button clearButton = (Button) findViewById(R.id.clearButton);
         Button modeButton = (Button) findViewById(R.id.modeButton);
-
-        //if mode is 0: length, else volume.
-
-        fromUnitString = fromUnitLabel.getText().toString();
-        toUnitString = toUnitLabel.getText().toString();
 
         clearButton.setOnClickListener(y -> {
             hideSoftKeyBoard();
@@ -101,14 +98,22 @@ public class MainActivity extends AppCompatActivity {
             toTextEdit.setText("");
             if(mode == 0) {
                 mode = 1;
-                fromUnitLabel.setText("Gallons");
-                toUnitLabel.setText("Liters");
+                String tempFrom = fromUnitLabel.getText().toString();
+                String tempTo = toUnitLabel.getText().toString();
+                fromUnitLabel.setText(oldFromString);
+                toUnitLabel.setText(oldToString);
+                oldFromString = tempFrom;
+                oldToString = tempTo;
                 titleText.setText("Volume Converter");
             }
             else{
                 mode = 0;
-                fromUnitLabel.setText("Yards");
-                toUnitLabel.setText("Meters");
+                String tempFrom = fromUnitLabel.getText().toString();
+                String tempTo = toUnitLabel.getText().toString();
+                fromUnitLabel.setText(oldFromString);
+                toUnitLabel.setText(oldToString);
+                oldFromString = tempFrom;
+                oldToString = tempTo;
                 titleText.setText("Length Converter");
             }
         });
@@ -160,10 +165,22 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
+        TextView fromUnitLabel = (TextView) findViewById(R.id.fromUnitLabel );
+        TextView toUnitLabel = (TextView) findViewById(R.id.toUnitLabel);
         switch (item.getItemId()){
             case R.id.action_settings_navigation:
+                if (mode == 0) {
+                    if (0 == 0) {
+
+                    }
+                } else {
+
+                }
+
                 Intent intent = new Intent(MainActivity.this, Settings.class);
                 intent.putExtra("mode", mode);
+                intent.putExtra("fromCurrent", 1);
+                intent.putExtra("toCurrent", 2);
                 startActivityForResult(intent,mode);
                 return true;
             default:
