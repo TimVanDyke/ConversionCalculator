@@ -67,7 +67,10 @@ public class Settings extends AppCompatActivity {
             toSpinner.setAdapter(volumeAdapter);
         }
 
-
+        if (payload.hasExtra("fromCurrent") && payload.hasExtra("toCurrent")) {
+            fromSpinner.setSelection(payload.getIntExtra("fromCurrent", 1));
+            toSpinner.setSelection(payload.getIntExtra("toCurrent", 1));
+        }
 
         fromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -92,20 +95,5 @@ public class Settings extends AppCompatActivity {
 
             }
         });
-
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == importedFrom) {
-//            fromSelection = data.getStringExtra("fromUnits");
-//        }
-//        if (resultCode == importedTo){
-//            toSelection = data.getStringExtra("toUnits");
-//        }
-//        if(resultCode == importedMode){
-//            modeSelection = data.getIntExtra("mode", 0);
-//        }
-//    }
-
 }

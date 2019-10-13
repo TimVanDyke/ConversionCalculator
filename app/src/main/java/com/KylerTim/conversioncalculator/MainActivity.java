@@ -167,20 +167,48 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         TextView fromUnitLabel = (TextView) findViewById(R.id.fromUnitLabel );
         TextView toUnitLabel = (TextView) findViewById(R.id.toUnitLabel);
+        int tempFromSelection = 0;
+        int tempToSelection = 0;
         switch (item.getItemId()){
             case R.id.action_settings_navigation:
                 if (mode == 0) {
-                    if (0 == 0) {
+                    if (fromUnitLabel.getText().toString().equals("Yards")) {
+                        tempFromSelection = 0;
+                    } else if(fromUnitLabel.getText().toString().equals("Meters")) {
+                        tempFromSelection = 1;
+                    } else {
+                        tempFromSelection = 2;
+                    }
 
+                    if (toUnitLabel.getText().toString().equals("Yards")) {
+                        tempToSelection = 0;
+                    } else if(toUnitLabel.getText().toString().equals("Meters")) {
+                        tempToSelection = 1;
+                    } else {
+                        tempToSelection = 2;
                     }
                 } else {
+                    if (fromUnitLabel.getText().toString().equals("Gallons")) {
+                        tempFromSelection = 0;
+                    } else if(fromUnitLabel.getText().toString().equals("Liters")) {
+                        tempFromSelection = 1;
+                    } else {
+                        tempFromSelection = 2;
+                    }
 
+                    if (toUnitLabel.getText().toString().equals("Gallons")) {
+                        tempToSelection = 0;
+                    } else if(toUnitLabel.getText().toString().equals("Liters")) {
+                        tempToSelection = 1;
+                    } else {
+                        tempToSelection = 2;
+                    }
                 }
 
                 Intent intent = new Intent(MainActivity.this, Settings.class);
                 intent.putExtra("mode", mode);
-                intent.putExtra("fromCurrent", 1);
-                intent.putExtra("toCurrent", 2);
+                intent.putExtra("fromCurrent", tempFromSelection);
+                intent.putExtra("toCurrent", tempToSelection);
                 startActivityForResult(intent,mode);
                 return true;
             default:
